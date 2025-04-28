@@ -48,4 +48,4 @@ tests/: Unit tests * results/: Evaluation metrics
 4. Run the pipeline: `./run_pipeline.sh`
 5. Explore notebooks in **Jupyter Notebook** for detailed analysis
 
-
+Mots-clés : "Esprit School of Engineering", "machine learning", "Python", "scikit-learn", "pandas", "Jupyter Notebook", "RandomForestClassifier", "data science", "seaborn", "matplotlib".
