@@ -33,3 +33,19 @@ This project includes 6 Jupyter notebooks developed for the **Data Science** cou
 - **06_final_analysis.ipynb**: Summary of findings and recommendations.
 
 ## Directory Structure
+ml_project/
+src/: Python scripts for preprocessing, training, evaluation
+data/: Datasets (tracked with DVC)
+notebooks/: 6 Jupyter notebooks for analysis
+models/: Trained models
+docs/: Documentation
+tests/: Unit tests * results/: Evaluation metrics
+
+## Getting Started
+1. Clone the repository: `git clone https://github.com/yourusername/ml_project`
+2. Create a virtual environment: `python -m venv venv`
+3. Install dependencies: `pip install -r requirements.txt`
+4. Run the pipeline: `./run_pipeline.sh`
+5. Explore notebooks in **Jupyter Notebook** for detailed analysis
+
+
