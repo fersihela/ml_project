@@ -1,0 +1,158 @@
+table Mesuree
+	lineageTag: 888a082c-ce38-4780-9af9-aa5e2e0dd2e5
+
+	measure 'Nombre des offres' = COUNTROWS('public fact_employabilite')
+		formatString: 0
+		lineageTag: cff0c32b-ba21-484b-9f01-2ac8e1a41348
+
+	measure 'Nombre des profils' = COUNTROWS('public Dim_profil')
+		formatString: 0
+		lineageTag: 1586125a-062b-4355-8ca8-382487c0301a
+
+	measure 'Nombre d''entreprises' =
+			
+			DISTINCTCOUNT('public Dim_profil'[company_name])
+		formatString: 0
+		lineageTag: 28f233f3-6133-40e7-a1d6-3ad961ba726e
+
+	measure 'Nombre de chômeurs' =
+			
+			CALCULATE(
+			    COUNTROWS('public fact_employabilite'),
+			    'public fact_employabilite'[position_date] = "N\A"
+			)
+		formatString: 0
+		lineageTag: e7839999-1aac-4073-8c7f-caf9ddb04d87
+
+	measure 'Nombre de travailleurs' =
+			
+			CALCULATE(
+			    COUNTROWS('public fact_employabilite'),
+			    'public fact_employabilite'[position_date] <> "N\A"
+			)
+		formatString: 0
+		lineageTag: 17dd8b53-b5e2-4326-a7ca-e708a111b9f5
+
+	measure DureeSansTravail = ```
+			
+			VAR dateDiplome = SELECTEDVALUE('public fact_employabilite'[date_Diplome])
+			VAR datePosition = SELECTEDVALUE('public fact_employabilite'[position_date_date])
+			VAR duree = DATEDIFF(dateDiplome, datePosition, MONTH)
+			RETURN 
+			    IF(duree < 0, 0, duree)
+			```
+		formatString: 0
+		lineageTag: f90de39f-6353-4186-b7c3-d910b8356da8
+
+	measure Competences_Communes =
+			
+			CALCULATE(
+			    COUNTROWS(
+			        FILTER(
+			            CROSSJOIN(
+			                'public Dim_offre',
+			                'public Dim_profil'
+			            ),
+			            'public Dim_offre'[Competence] = 'public Dim_profil'[Skills_Split]
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: 3df1bd57-5554-447d-8910-53f5c54baa10
+
+	measure 'Taux d''employabilité (%)' = ```
+			
+			DIVIDE(
+			    [Nombre de travailleurs],
+			    [Nombre des profils],
+			    0
+			) * 100
+			
+			```
+		formatString: #,0.00
+		lineageTag: e812ba6c-506e-4aa7-bde3-b91465e4064c
+
+	measure 'Nombre des offress' = COUNTROWS('public Dim_offre')
+		formatString: 0
+		lineageTag: 1a6260bc-9fab-435e-87b7-75ff080bd800
+
+	measure Nombre_Candidats_fact =
+			
+			COUNT('public fact_Admission'[fk_candidat])
+		formatString: 0
+		lineageTag: 9e1b73be-c1d0-4729-a56b-4dbc72fee283
+
+	measure Nombre_Candidats =
+			
+			COUNT('public Dim_candidat'[pk_candidat])
+		formatString: 0
+		lineageTag: 78fcd140-d57c-4fd5-bdc5-df49b095b38f
+
+	measure Inscriptions_Precedentes = ```
+			
+			CALCULATE(
+			    COUNT('public fact_Admission'[fk_candidat]),
+			    FILTER(
+			        ALLSELECTED('public fact_Admission'),
+			        'public fact_Admission'[date_enregistrement] = YEAR(TODAY()) - 1
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 1a39c89d-d452-4fe6-8502-db83180e7431
+
+	measure Taux_Evolution_Inscriptions = ```
+			
+			DIVIDE(
+			    [Nombre_Candidats] - [Inscriptions_Precedentes],
+			    [Inscriptions_Precedentes],
+			    0
+			) * 100
+			
+			```
+		lineageTag: e3f8a1cb-2761-4f32-ab35-5f94681cf652
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Candidats_Admis =
+			
+			DIVIDE(
+			    [Nombre_Candidats],
+			    CALCULATE(
+			        COUNT('public Dim_candidat'[pk_candidat]),
+			        'public Dim_candidat'[resultat] IN {"ADMIS(E)", "LISTE ATTENTE"}
+			    )
+			)
+		lineageTag: a9e6a12c-0f55-4fa8-9e96-ec4e81f41e48
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Candidats_Attente =
+			
+			DIVIDE(
+			    [Nombre_Candidats],
+			    CALCULATE(
+			        COUNT('public Dim_candidat'[pk_candidat]),
+			        'public Dim_candidat'[resultat] = "LISTE ATTENTE"
+			    )
+			)
+		lineageTag: 760fb6a7-1e6b-43c4-bc0f-38b7c51cd352
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		formatString: 0
+		lineageTag: 601d0407-5928-4c30-ac70-cc00a959e2f0
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Mesuree = calculated
+		mode: import
+		source = Mesures
+
+	annotation PBI_Id = 53e0007ac32c492c86480e34a6e45d10
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "powerbiadmissionemploiyabiltee"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ae53d3e4-5e82-4bcb-be95-b5e32d4d80ac"
+  }
+}

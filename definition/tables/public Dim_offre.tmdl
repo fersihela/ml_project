@@ -1,0 +1,59 @@
+table 'public Dim_offre'
+	lineageTag: dd7c1a29-eebd-47f3-9edc-e5008613d954
+
+	column pk_offre
+		dataType: int64
+		formatString: 0
+		lineageTag: dfe31504-5201-4132-afaf-6c73dfd5ca6a
+		summarizeBy: none
+		sourceColumn: pk_offre
+
+		annotation SummarizationSetBy = Automatic
+
+	column code_offre
+		dataType: string
+		lineageTag: 8b84e7df-ac59-4ecb-9080-ba4070a0441f
+		summarizeBy: none
+		sourceColumn: code_offre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Secteur
+		dataType: string
+		lineageTag: 135668e7-9357-49d2-9eae-6af72b5ad971
+		summarizeBy: none
+		sourceColumn: Secteur
+
+		annotation SummarizationSetBy = Automatic
+
+	column Offre
+		dataType: string
+		lineageTag: c804976e-f73d-42f5-8c43-2e93fa3a8ef6
+		summarizeBy: none
+		sourceColumn: Offre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Competence
+		dataType: string
+		lineageTag: 09984a60-3046-41e6-937c-40d0e54e013b
+		summarizeBy: none
+		sourceColumn: Competence
+
+		annotation SummarizationSetBy = Automatic
+
+	column service = "emp"
+		lineageTag: 6bd61eb8-3d60-4527-86e6-776e3c450c42
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public Dim_offre' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ADMISSION_DW_NEW"),
+				    public_Dim_offre = Source{[Schema="public",Item="Dim_offre"]}[Data]
+				in
+				    public_Dim_offre
+

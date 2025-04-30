@@ -1,0 +1,49 @@
+table 'public Resultats_Objectif2'
+	lineageTag: 5f0e5689-28fa-46b9-9437-cb2a370a3e53
+
+	column Annee
+		dataType: int64
+		formatString: 0
+		lineageTag: 157a111a-aac1-4ff6-a481-3a759d42e8d5
+		summarizeBy: sum
+		sourceColumn: Annee
+
+		annotation SummarizationSetBy = Automatic
+
+	column Frequence_Competence
+		dataType: double
+		lineageTag: a9475035-cf94-4023-8958-d617b27802ed
+		summarizeBy: sum
+		sourceColumn: Frequence_Competence
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Competence
+		dataType: string
+		lineageTag: c3eb9ca1-31c3-4337-8206-3f8b3cd7dc60
+		summarizeBy: none
+		sourceColumn: Competence
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		lineageTag: 27f3f3a9-a6a6-410e-948f-0e01952e80c4
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public Resultats_Objectif2' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "newdwadmission"),
+				    public_Resultats_Objectif2 = Source{[Schema="public",Item="Resultats_Objectif2"]}[Data]
+				in
+				    public_Resultats_Objectif2
+
+	annotation PBI_ResultType = Table
+

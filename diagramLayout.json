@@ -1,0 +1,243 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 1334.9924423043269,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1077.1247732822833,
+            "y": -50
+          },
+          "nodeIndex": "public Dim_candidat",
+          "nodeLineageTag": "02fba8c6-3c79-41bf-aea3-72ca90699f5b",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 1028.9675250516375,
+            "y": 387.82787642794119
+          },
+          "nodeIndex": "public dim_diplome",
+          "nodeLineageTag": "0aa6ea1e-2c60-4bf0-80e3-7480e76b55f3",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 330.02431578897574,
+            "y": 212.50562319954258
+          },
+          "nodeIndex": "public dim_localisation",
+          "nodeLineageTag": "37e9055b-c334-4d6d-ad75-098c4a8f82fb",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 171.80594345268287,
+            "y": 770.71385810454069
+          },
+          "nodeIndex": "public Dim_offre",
+          "nodeLineageTag": "dd7c1a29-eebd-47f3-9edc-e5008613d954",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 417.45846458575375
+          },
+          "nodeIndex": "public Dim_profil",
+          "nodeLineageTag": "3deae0a9-7fbe-40fd-8f21-a6585c0f1c9c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 664.14392614091082,
+            "y": 386.148585454328
+          },
+          "nodeIndex": "public dimdates",
+          "nodeLineageTag": "871fbe0e-2900-4bf9-a71f-a3db739999bc",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 790.07465790864637,
+            "y": 86.910758357832947
+          },
+          "nodeIndex": "public fact_Admission",
+          "nodeLineageTag": "ad484d41-b897-4bc0-9b7f-2d9738b8c6ff",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1724.4890066156167,
+            "y": 20.100013110241264
+          },
+          "nodeIndex": "Mesuree",
+          "nodeLineageTag": "888a082c-ce38-4780-9af9-aa5e2e0dd2e5",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1545.1247732822833,
+            "y": 374.35692905227035
+          },
+          "nodeIndex": "public fact_employabilite",
+          "nodeLineageTag": "5185e3e3-4f21-42bc-a11d-df8d9bd3387d",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1958.4890066156167,
+            "y": 410.35692905227035
+          },
+          "nodeIndex": "public Resultats_Objectif1",
+          "nodeLineageTag": "e90aa914-a0d2-44db-adb6-06451a2650bf",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 2242.4890066156167,
+            "y": 422.35692905227035
+          },
+          "nodeIndex": "public Resultats_Objectif2",
+          "nodeLineageTag": "5f0e5689-28fa-46b9-9437-cb2a370a3e53",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 2526.4890066156167,
+            "y": 434.35692905227035
+          },
+          "nodeIndex": "public Resultats_Objectif3",
+          "nodeLineageTag": "e5547b9d-6d3c-4ccf-b86e-03f21ce690da",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 2760.4890066156167,
+            "y": 434.35692905227035
+          },
+          "nodeIndex": "public Resultats_Modele1",
+          "nodeLineageTag": "88d174cc-0a7c-4794-ab21-06be2bdf817c",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3044.4890066156167,
+            "y": 434.35692905227035
+          },
+          "nodeIndex": "public Resultats_Modele2",
+          "nodeLineageTag": "5ada330f-4114-4d9c-a4fd-5a22f0190a36",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3278.4890066156167,
+            "y": 446.35692905227035
+          },
+          "nodeIndex": "Feuil1",
+          "nodeLineageTag": "1aa5b3c0-698d-423c-bf23-0a062e07bdee",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3512.4890066156167,
+            "y": 446.35692905227035
+          },
+          "nodeIndex": "Table",
+          "nodeLineageTag": "f3936bbb-c3ad-41c0-bfc0-d9b2fbf5684c",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3746.4890066156167,
+            "y": 446.35692905227035
+          },
+          "nodeIndex": "User",
+          "nodeLineageTag": "3744256c-bfa4-46e8-a02f-d2c9e3187b5d",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 54.891695606012917,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

@@ -1,0 +1,62 @@
+table 'public Resultats_Objectif1'
+	lineageTag: e90aa914-a0d2-44db-adb6-06451a2650bf
+
+	column ds
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0f1e3ef4-8b7b-42e5-b30b-040322f99e4c
+		summarizeBy: none
+		sourceColumn: ds
+
+		variation Variation
+			isDefault
+			relationship: 33633076-7fb4-4633-973d-14acb5881107
+			defaultHierarchy: LocalDateTable_4954a8f5-858a-4fcb-8a88-af983516bba9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nombre_Offres
+		dataType: double
+		lineageTag: ae2dc5b2-8285-470d-ac1b-203575ceaa90
+		summarizeBy: sum
+		sourceColumn: Nombre_Offres
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Secteur
+		dataType: string
+		lineageTag: 651e729b-15c7-4884-9636-15d0db45fba0
+		summarizeBy: none
+		sourceColumn: Secteur
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		lineageTag: 3703acdb-b2b6-4a32-a395-7769ca8ccfc8
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'secteur 2'
+		dataType: string
+		lineageTag: c202d560-5211-489d-8120-8cc2c8b873b9
+		summarizeBy: none
+		sourceColumn: secteur
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public Resultats_Objectif1' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "newdwadmission"),
+				    public_Resultats_Objectif1 = Source{[Schema="public",Item="Resultats_Objectif1"]}[Data]
+				in
+				    public_Resultats_Objectif1
+
+	annotation PBI_ResultType = Table
+

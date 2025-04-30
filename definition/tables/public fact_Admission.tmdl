@@ -1,0 +1,110 @@
+table 'public fact_Admission'
+	lineageTag: ad484d41-b897-4bc0-9b7f-2d9738b8c6ff
+
+	column fk_candidat
+		dataType: int64
+		formatString: 0
+		lineageTag: 99fc962e-5681-40a4-8ee3-7896a6b0bb83
+		summarizeBy: none
+		sourceColumn: fk_candidat
+
+		annotation SummarizationSetBy = Automatic
+
+	column fk_diplome
+		dataType: int64
+		formatString: 0
+		lineageTag: d96fe910-3874-4dcf-94b5-b73becfd5f1f
+		summarizeBy: none
+		sourceColumn: fk_diplome
+
+		annotation SummarizationSetBy = Automatic
+
+	column fk_date
+		dataType: int64
+		formatString: 0
+		lineageTag: b7305ac4-0b98-4a6c-a9c3-ba123173adf0
+		summarizeBy: none
+		sourceColumn: fk_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_preinscrit
+		dataType: string
+		lineageTag: 73552409-5f33-4012-804a-7258a189359d
+		summarizeBy: none
+		sourceColumn: date_preinscrit
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_enregistrement
+		dataType: string
+		lineageTag: 829dd928-a115-43e2-a2dd-87eba0263d84
+		summarizeBy: none
+		sourceColumn: date_enregistrement
+
+		annotation SummarizationSetBy = Automatic
+
+	column score
+		dataType: string
+		lineageTag: 28c8cf06-85db-4406-8551-3b2d11c026d4
+		summarizeBy: none
+		sourceColumn: score
+
+		annotation SummarizationSetBy = Automatic
+
+	column moyenne_bac
+		dataType: string
+		lineageTag: a487ecbe-fe7e-494d-b024-95e111ec61f7
+		summarizeBy: none
+		sourceColumn: moyenne_bac
+
+		annotation SummarizationSetBy = Automatic
+
+	column Intervalle_Moyenne_Bac = ```
+			
+			SWITCH(
+			    TRUE(),
+			    VALUE('public fact_Admission'[moyenne_bac]) < 10, "0-10",
+			    VALUE('public fact_Admission'[moyenne_bac]) < 12, "10-12",
+			    VALUE('public fact_Admission'[moyenne_bac]) < 14, "12-14",
+			    VALUE('public fact_Admission'[moyenne_bac]) < 16, "14-16",
+			    VALUE('public fact_Admission'[moyenne_bac]) >= 16, "16-20",
+			    "Non classé"
+			)
+			
+			```
+		lineageTag: cc78cde1-43bc-43a1-8604-823e3391da27
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Intervalle_Score = ```
+			
+			VAR score_numeric = VALUE('public fact_Admission'[score])
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK(score_numeric), "Non classé",
+			        score_numeric < 20, "0-20",
+			        score_numeric < 40, "20-40",
+			        score_numeric < 60, "40-60",
+			        score_numeric < 80, "60-80",
+			        score_numeric <= 100, "80-100",
+			        "Non classé"
+			    )
+			
+			```
+		lineageTag: 5fa16188-91cf-4152-b184-8dc07a5741cb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public fact_Admission' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ADMISSION_DW_NEW"),
+				    public_fact_Admission = Source{[Schema="public",Item="fact_Admission"]}[Data]
+				in
+				    public_fact_Admission
+

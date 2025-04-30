@@ -1,0 +1,9 @@
+role psecurity
+	modelPermission: read
+
+	tablePermission Table = [User]=USERPRINCIPALNAME()
+
+	tablePermission Feuil1 = [Userr] = USERPRINCIPALNAME()
+
+	annotation PBI_Id = c563393302b94c349cdf2f0220cb41c4
+

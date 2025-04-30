@@ -1,0 +1,37 @@
+table 'public dim_localisation'
+	lineageTag: 37e9055b-c334-4d6d-ad75-098c4a8f82fb
+
+	column pk_localisation
+		dataType: int64
+		formatString: 0
+		lineageTag: 3008a602-461a-45d1-a1ec-072e50a5a508
+		summarizeBy: none
+		sourceColumn: pk_localisation
+
+		annotation SummarizationSetBy = Automatic
+
+	column pays
+		dataType: string
+		lineageTag: 225e2811-b40e-4d3c-8d4d-5d52700617de
+		summarizeBy: none
+		sourceColumn: pays
+
+		annotation SummarizationSetBy = Automatic
+
+	column _code_pays
+		dataType: string
+		lineageTag: 4dec3e7b-2541-4eba-abb6-e6ded4f48449
+		summarizeBy: none
+		sourceColumn: _code_pays
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public dim_localisation' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ADMISSION_DW_NEW"),
+				    public_dim_localisation = Source{[Schema="public",Item="dim_localisation"]}[Data]
+				in
+				    public_dim_localisation
+

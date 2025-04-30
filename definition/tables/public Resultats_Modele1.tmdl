@@ -1,0 +1,39 @@
+table 'public Resultats_Modele1'
+	lineageTag: 88d174cc-0a7c-4794-ab21-06be2bdf817c
+
+	column AnneeEnregis
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a9c9660-63d8-4359-98ef-c24733ec40ec
+		summarizeBy: sum
+		sourceColumn: AnneeEnregis
+
+		annotation SummarizationSetBy = Automatic
+
+	column Taux_Evolution_Inscriptions
+		dataType: double
+		lineageTag: 1e8cc2b1-2981-4392-a76d-6e4369920be4
+		summarizeBy: sum
+		sourceColumn: Taux_Evolution_Inscriptions
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Type
+		dataType: string
+		lineageTag: d5311e89-17c4-4372-b2b0-8b1fb79e2251
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public Resultats_Modele1' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "newdwadmission"),
+				    public_Resultats_Modele1 = Source{[Schema="public",Item="Resultats_Modele1"]}[Data]
+				in
+				    public_Resultats_Modele1
+

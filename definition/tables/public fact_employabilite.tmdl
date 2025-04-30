@@ -1,0 +1,158 @@
+table 'public fact_employabilite'
+	lineageTag: 5185e3e3-4f21-42bc-a11d-df8d9bd3387d
+
+	column fk_profil
+		dataType: int64
+		formatString: 0
+		lineageTag: 350b76d5-0887-4bfc-b606-f89e3d90cbaa
+		summarizeBy: none
+		sourceColumn: fk_profil
+
+		annotation SummarizationSetBy = Automatic
+
+	column fk_date
+		dataType: int64
+		formatString: 0
+		lineageTag: f627480b-768f-4358-9c7e-41538698b425
+		summarizeBy: none
+		sourceColumn: fk_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column fk_localisation
+		dataType: int64
+		formatString: 0
+		lineageTag: c7df3934-c1dd-4b8b-9920-24160998cd31
+		summarizeBy: none
+		sourceColumn: fk_localisation
+
+		annotation SummarizationSetBy = Automatic
+
+	column fk_offre
+		dataType: int64
+		formatString: 0
+		lineageTag: 0781d1f9-106e-444b-9c60-bd8b2b2448b7
+		summarizeBy: none
+		sourceColumn: fk_offre
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_offre
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b9ae0a1a-f937-4c4a-afa1-9000d1f9d5b7
+		summarizeBy: none
+		sourceColumn: date_offre
+
+		variation Variation
+			isDefault
+			relationship: 269a9b22-015e-47b2-a09c-c8d2b26a5b55
+			defaultHierarchy: LocalDateTable_671c6020-fd6a-48e3-99f5-d4cdbe35f006.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column date_diplome
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c8f5b70c-d890-4f2c-b08b-2ab004b374f0
+		summarizeBy: none
+		sourceColumn: date_diplome
+
+		variation Variation
+			isDefault
+			relationship: 74a7e42a-8504-42d6-b9d3-05fbc0deb912
+			defaultHierarchy: LocalDateTable_2d4c01b9-6a1c-433c-bad5-f4a0bd7c3b57.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column salaire
+		dataType: string
+		lineageTag: 566e6fc2-c45f-40af-beb7-cf210b4422f1
+		summarizeBy: none
+		sourceColumn: salaire
+
+		annotation SummarizationSetBy = Automatic
+
+	column position_date
+		dataType: string
+		lineageTag: a57e13b8-b3e6-4a57-8904-0971bed01593
+		summarizeBy: none
+		sourceColumn: position_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Année_offre
+		dataType: int64
+		formatString: 0
+		lineageTag: 1fe7e40d-7811-4917-9dd4-4d9d65e141ce
+		summarizeBy: sum
+		sourceColumn: Année_offre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Année_diplome
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a56c75e-0849-48ab-b624-129c36f09394
+		summarizeBy: sum
+		sourceColumn: Année_diplome
+
+		annotation SummarizationSetBy = Automatic
+
+	column position_date_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b49d1e82-1e0e-4046-9aab-556cd9055da0
+		summarizeBy: none
+		sourceColumn: position_date_date
+
+		variation Variation
+			isDefault
+			relationship: c17b132f-2ae0-44ad-b6f3-cc2c722fc897
+			defaultHierarchy: LocalDateTable_d5827d78-1943-4bf0-8f3e-d5a34f35b8b5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column service = ```
+			"emp"
+			
+			```
+		lineageTag: 6c2472e6-5eef-42cd-a098-98b47b113c4b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public fact_employabilite' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ADMISSION_DW_NEW"),
+				    public_fact_employabilite = Source{[Schema="public",Item="fact_employabilite"]}[Data],
+				    #"Type modifié" = Table.TransformColumnTypes(public_fact_employabilite,{{"date_offre", type date}}),
+				    #"Année insérée" = Table.AddColumn(#"Type modifié", "Année", each Date.Year([date_offre]), Int64.Type),
+				    #"Colonnes renommées" = Table.RenameColumns(#"Année insérée",{{"Année", "Année_offre"}}),
+				    #"Type modifié1" = Table.TransformColumnTypes(#"Colonnes renommées",{{"date_diplome", type date}}),
+				    #"Année insérée1" = Table.AddColumn(#"Type modifié1", "Année", each Date.Year([date_diplome]), Int64.Type),
+				    #"Colonnes renommées1" = Table.RenameColumns(#"Année insérée1",{{"Année", "Année_diplome"}}),
+				    #"Duplication de la colonne" = Table.DuplicateColumn(#"Colonnes renommées1", "position_date", "position_date - Copier"),
+				    #"Valeur remplacée" = Table.ReplaceValue(#"Duplication de la colonne","N\A","2022",Replacer.ReplaceText,{"position_date - Copier"}),
+				    #"Colonnes renommées2" = Table.RenameColumns(#"Valeur remplacée",{{"position_date - Copier", "position_date_date"}}),
+				    #"Type modifié2" = Table.TransformColumnTypes(#"Colonnes renommées2",{{"position_date_date", type date}}),
+				    #"Colonnes supprimées" = Table.RemoveColumns(#"Type modifié2",{"position_date_date"}),
+				    #"Duplication de la colonne1" = Table.DuplicateColumn(#"Colonnes supprimées", "position_date", "position_date - Copier"),
+				    #"Colonnes renommées3" = Table.RenameColumns(#"Duplication de la colonne1",{{"position_date - Copier", "position_date_date"}}),
+				    #"Valeur remplacée1" = Table.ReplaceValue(#"Colonnes renommées3","N\A","1000-01-01",Replacer.ReplaceText,{"position_date_date"}),
+				    #"Type modifié3" = Table.TransformColumnTypes(#"Valeur remplacée1",{{"position_date_date", type date}})
+				in
+				    #"Type modifié3"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,163 @@
+table 'public dimdates'
+	lineageTag: 871fbe0e-2900-4bf9-a71f-a3db739999bc
+
+	column date_pk
+		dataType: int64
+		formatString: 0
+		lineageTag: 65759b43-af19-42e9-a3ef-b416a6a5c981
+		summarizeBy: none
+		sourceColumn: date_pk
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d8033d28-ff75-455f-9478-438d61276c7a
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variation
+			isDefault
+			relationship: 13656a8d-9472-46b4-9912-0aee6c5010e0
+			defaultHierarchy: LocalDateTable_b153181f-eb7a-4503-9182-ade54bb3dd2e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column jour_moi_annee
+		dataType: string
+		lineageTag: ad2eefbf-5f55-4a21-8e5c-4d0ba885f70c
+		summarizeBy: none
+		sourceColumn: jour_moi_annee
+
+		annotation SummarizationSetBy = Automatic
+
+	column annee
+		dataType: int64
+		formatString: 0
+		lineageTag: 133b6af6-046c-4969-ac42-f93b005fff90
+		summarizeBy: sum
+		sourceColumn: annee
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_semestre
+		dataType: string
+		lineageTag: 0575649f-4b58-4082-869d-3f70bc397b98
+		summarizeBy: none
+		sourceColumn: id_semestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column semestre
+		dataType: string
+		lineageTag: a39fc2ab-6b59-4a8c-bb94-4ca5cc1d238e
+		summarizeBy: none
+		sourceColumn: semestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_trimestre
+		dataType: string
+		lineageTag: 803ffa4d-6327-4e75-b1c1-90b2496d9d46
+		summarizeBy: none
+		sourceColumn: id_trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column trimestre
+		dataType: string
+		lineageTag: d713ced1-7fbe-4f0f-82ef-3afad102b88e
+		summarizeBy: none
+		sourceColumn: trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_mois
+		dataType: string
+		lineageTag: 815727be-9dc7-46f7-b467-e206787de812
+		summarizeBy: none
+		sourceColumn: id_mois
+
+		annotation SummarizationSetBy = Automatic
+
+	column mois
+		dataType: int64
+		formatString: 0
+		lineageTag: 0989f0f6-2d5a-41ab-8f06-f52dc6c817d7
+		summarizeBy: sum
+		sourceColumn: mois
+
+		annotation SummarizationSetBy = Automatic
+
+	column lib_mois
+		dataType: string
+		lineageTag: 7b4610aa-a7d8-43f7-ac0b-d093b45e2b19
+		summarizeBy: none
+		sourceColumn: lib_mois
+
+		annotation SummarizationSetBy = Automatic
+
+	column jour
+		dataType: int64
+		formatString: 0
+		lineageTag: 8fb910ba-fca0-4abf-b972-c0e97c61f46e
+		summarizeBy: sum
+		sourceColumn: jour
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_lib_jour
+		dataType: int64
+		formatString: 0
+		lineageTag: 44d0b881-2ac8-4719-844f-980f73a73bab
+		summarizeBy: sum
+		sourceColumn: id_lib_jour
+
+		annotation SummarizationSetBy = Automatic
+
+	column lib_jour
+		dataType: string
+		lineageTag: d6766e79-1f66-484f-aba8-712d8fe145d9
+		summarizeBy: none
+		sourceColumn: lib_jour
+
+		annotation SummarizationSetBy = Automatic
+
+	column semaine
+		dataType: int64
+		formatString: 0
+		lineageTag: 05bac451-130f-417b-8ab2-92fa63ec5ffb
+		summarizeBy: sum
+		sourceColumn: semaine
+
+		annotation SummarizationSetBy = Automatic
+
+	column jourdeannee
+		dataType: int64
+		formatString: 0
+		lineageTag: 736a1e8d-2aa1-4d3f-b8a2-737191f0cfc2
+		summarizeBy: sum
+		sourceColumn: jourdeannee
+
+		annotation SummarizationSetBy = Automatic
+
+	column jour_mois_lettre
+		dataType: string
+		lineageTag: 089bfe1a-f102-4ad3-ab56-204ddfd7d88e
+		summarizeBy: none
+		sourceColumn: jour_mois_lettre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public dimdates' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ADMISSION_DW_NEW"),
+				    public_dimdates = Source{[Schema="public",Item="dimdates"]}[Data]
+				in
+				    public_dimdates
+

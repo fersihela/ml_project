@@ -1,0 +1,62 @@
+table 'public dim_diplome'
+	lineageTag: 0aa6ea1e-2c60-4bf0-80e3-7480e76b55f3
+
+	column pk_diplome
+		dataType: int64
+		formatString: 0
+		lineageTag: f1489cdd-2cc4-4b00-935e-dc4ce53e1ba7
+		summarizeBy: none
+		sourceColumn: pk_diplome
+
+		annotation SummarizationSetBy = Automatic
+
+	column code_diplome
+		dataType: string
+		lineageTag: b2ff3abc-52ff-48b3-9997-b4a894ea821b
+		summarizeBy: none
+		sourceColumn: code_diplome
+
+		annotation SummarizationSetBy = Automatic
+
+	column specialite
+		dataType: string
+		lineageTag: 13a18acc-627f-4e2b-bc41-7f2b32dac5ae
+		summarizeBy: none
+		sourceColumn: specialite
+
+		annotation SummarizationSetBy = Automatic
+
+	column mention
+		dataType: string
+		lineageTag: 628f2c7a-a24f-4ffd-9aab-9925c19dbf54
+		summarizeBy: none
+		sourceColumn: mention
+
+		annotation SummarizationSetBy = Automatic
+
+	column type_diplome
+		dataType: string
+		lineageTag: a3c1eeb3-be0f-4fd1-9ff6-43c316949c5b
+		summarizeBy: none
+		sourceColumn: type_diplome
+
+		annotation SummarizationSetBy = Automatic
+
+	column service = ```
+			"emp"
+			
+			```
+		lineageTag: 70f44b31-9450-4d0a-806a-f116d719b02c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public dim_diplome' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ADMISSION_DW_NEW"),
+				    public_dim_diplome = Source{[Schema="public",Item="dim_diplome"]}[Data]
+				in
+				    public_dim_diplome
+

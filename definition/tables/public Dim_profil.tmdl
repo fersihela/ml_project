@@ -1,0 +1,123 @@
+table 'public Dim_profil'
+	lineageTag: 3deae0a9-7fbe-40fd-8f21-a6585c0f1c9c
+
+	column pk_profil
+		dataType: int64
+		formatString: 0
+		lineageTag: ed4ff7dd-e66b-450e-a006-93c882ff4e09
+		summarizeBy: none
+		sourceColumn: pk_profil
+
+		annotation SummarizationSetBy = Automatic
+
+	column full_name
+		dataType: string
+		lineageTag: 5325f906-84d3-456f-87d2-be3ae2e65d91
+		summarizeBy: none
+		sourceColumn: full_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column current_position
+		dataType: string
+		lineageTag: dedf0c2e-3dc1-4b46-945e-465001485d26
+		summarizeBy: none
+		sourceColumn: current_position
+
+		annotation SummarizationSetBy = Automatic
+
+	column location
+		dataType: string
+		lineageTag: 50f521c0-1e27-4177-978b-e03f951d6791
+		summarizeBy: none
+		sourceColumn: location
+
+		annotation SummarizationSetBy = Automatic
+
+	column skills
+		dataType: string
+		lineageTag: 1db68ee8-8270-4817-a86d-bfe7b6cea358
+		summarizeBy: none
+		sourceColumn: skills
+
+		annotation SummarizationSetBy = Automatic
+
+	column industry
+		dataType: string
+		lineageTag: dd9344c1-dc3b-41ed-ba82-614a08e874b5
+		summarizeBy: none
+		sourceColumn: industry
+
+		annotation SummarizationSetBy = Automatic
+
+	column changed_job
+		dataType: string
+		lineageTag: 216859c5-8f47-493e-9019-d95de8634285
+		summarizeBy: none
+		sourceColumn: changed_job
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_name
+		dataType: string
+		lineageTag: 49d349fb-297d-4bde-bf70-94306ecc69ef
+		summarizeBy: none
+		sourceColumn: company_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 903a13bb-dba3-4308-a570-8a1bdb5886de
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column time_in_company_date
+		dataType: double
+		lineageTag: f03b5d85-3bec-48ac-a1a4-ca8bca758057
+		summarizeBy: sum
+		sourceColumn: time_in_company_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column skills_split
+		dataType: string
+		lineageTag: 14a8b2b6-aee1-4538-b071-4d3472184067
+		summarizeBy: none
+		sourceColumn: skills_split
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public Dim_profil' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ADMISSION_DW_NEW"),
+				    public_Dim_profil = Source{[Schema="public",Item="Dim_profil"]}[Data],
+				    #"Fractionner la colonne par délimiteur" = Table.SplitColumn(public_Dim_profil, "time_in_company", Splitter.SplitTextByEachDelimiter({" "}, QuoteStyle.Csv, false), {"time_in_company.1", "time_in_company.2"}),
+				    #"Type modifié" = Table.TransformColumnTypes(#"Fractionner la colonne par délimiteur",{{"time_in_company.1", Int64.Type}, {"time_in_company.2", type text}}),
+				    #"Colonnes supprimées" = Table.RemoveColumns(#"Type modifié",{"time_in_company.2"}),
+				    #"Erreurs supprimées" = Table.RemoveRowsWithErrors(#"Colonnes supprimées", {"time_in_company.1"}),
+				    #"Valeur remplacée" = Table.ReplaceValue(#"Erreurs supprimées",10,1,Replacer.ReplaceValue,{"time_in_company.1"}),
+				    #"Valeur remplacée1" = Table.ReplaceValue(#"Valeur remplacée",10,6,Replacer.ReplaceValue,{"time_in_company.1"}),
+				    #"Valeur remplacée2" = Table.ReplaceValue(#"Valeur remplacée1",12,3,Replacer.ReplaceValue,{"time_in_company.1"}),
+				    #"Valeur remplacée3" = Table.ReplaceValue(#"Valeur remplacée2",11,1,Replacer.ReplaceValue,{"time_in_company.1"}),
+				    #"Valeur remplacée4" = Table.ReplaceValue(#"Valeur remplacée3",14,2,Replacer.ReplaceValue,{"time_in_company.1"}),
+				    #"Valeur remplacée5" = Table.ReplaceValue(#"Valeur remplacée4",13,2,Replacer.ReplaceValue,{"time_in_company.1"}),
+				    #"Colonnes renommées" = Table.RenameColumns(#"Valeur remplacée5",{{"time_in_company.1", "time_in_company_date"}}),
+				    #"Duplication de la colonne" = Table.DuplicateColumn(#"Colonnes renommées", "skills", "skills - Copier"),
+				    #"Colonnes renommées1" = Table.RenameColumns(#"Duplication de la colonne",{{"skills - Copier", "skills_split"}}),
+				    #"Fractionner la colonne par délimiteur1" = Table.ExpandListColumn(Table.TransformColumns(#"Colonnes renommées1", {{"skills_split", Splitter.SplitTextByDelimiter(",", QuoteStyle.None), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "skills_split"),
+				    #"Type modifié1" = Table.TransformColumnTypes(#"Fractionner la colonne par délimiteur1",{{"skills_split", type text}}),
+				    #"Doublons supprimés" = Table.Distinct(#"Type modifié1", {"pk_profil"})
+				in
+				    #"Doublons supprimés"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

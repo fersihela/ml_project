@@ -1,0 +1,78 @@
+table 'public Dim_candidat'
+	lineageTag: 02fba8c6-3c79-41bf-aea3-72ca90699f5b
+
+	column pk_candidat
+		dataType: int64
+		formatString: 0
+		lineageTag: d105b918-5d58-40de-a1eb-0975c502ccdb
+		summarizeBy: none
+		sourceColumn: pk_candidat
+
+		annotation SummarizationSetBy = Automatic
+
+	column situation_economique
+		dataType: string
+		lineageTag: ea04fea6-adb0-4127-8ffa-e09af66025f1
+		summarizeBy: none
+		sourceColumn: situation_economique
+
+		annotation SummarizationSetBy = Automatic
+
+	column code_candidat
+		dataType: string
+		lineageTag: 4864e51c-620b-433a-9ee8-d318da2742b0
+		summarizeBy: none
+		sourceColumn: code_candidat
+
+		annotation SummarizationSetBy = Automatic
+
+	column sexe
+		dataType: string
+		lineageTag: fa8a8393-4111-4214-ac66-c50a8b5abb68
+		summarizeBy: none
+		sourceColumn: sexe
+
+		annotation SummarizationSetBy = Automatic
+
+	column resultat
+		dataType: string
+		lineageTag: 2037ed88-e558-4f25-b4c6-6a3d752df3a6
+		summarizeBy: none
+		sourceColumn: resultat
+
+		annotation SummarizationSetBy = Automatic
+
+	column orientation
+		dataType: string
+		lineageTag: bba7f99f-bffc-4d65-80fa-509acae42069
+		summarizeBy: none
+		sourceColumn: orientation
+
+		annotation SummarizationSetBy = Automatic
+
+	column code_pays
+		dataType: string
+		lineageTag: 85e9f4dd-66c4-4969-851c-dbbbd8546647
+		summarizeBy: none
+		sourceColumn: code_pays
+
+		annotation SummarizationSetBy = Automatic
+
+	column service = ```
+			"Admission"
+			
+			```
+		lineageTag: 6fa62ee9-e93a-49b7-b779-5557bb773ff5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public Dim_candidat' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ADMISSION_DW_NEW"),
+				    public_Dim_candidat = Source{[Schema="public",Item="Dim_candidat"]}[Data]
+				in
+				    public_Dim_candidat
+

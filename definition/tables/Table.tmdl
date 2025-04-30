@@ -1,0 +1,46 @@
+table Table
+	lineageTag: f3936bbb-c3ad-41c0-bfc0-d9b2fbf5684c
+
+	measure Userr = USERPRINCIPALNAME()
+		lineageTag: 5d44e10f-370a-43d0-97b9-f4af9aec823e
+
+	column User
+		dataType: string
+		lineageTag: 3c9adb37-bef2-4010-988b-919d05a964f7
+		summarizeBy: none
+		sourceColumn: User
+
+		annotation SummarizationSetBy = Automatic
+
+	column Page
+		dataType: string
+		lineageTag: 678bd8bf-4c8c-4514-b5f5-e49986b74c96
+		summarizeBy: none
+		sourceColumn: Page
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Table = m
+		mode: import
+		source = ```
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45Wyk0sSszVy8hJzMl0SC0uKMos0SvJU9JRcs0tyMmvTEzKzMksObxSKVYnWqk4sagoUS8xKSk1D0WpY0puZnFxZn6eUmwsAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [User = _t, Page = _t]),
+				    #"Type modifié" = Table.TransformColumnTypes(Source,{{"User", type text}, {"Page", type text}}),
+				    #"Valeur remplacée" = Table.ReplaceValue(#"Type modifié","maram.hlali@esprit.tn","maram.HLALI@esprit.tn",Replacer.ReplaceText,{"User"}),
+				    
+				    // 🆕 Étape ajout d'une ligne personnalisée
+				    AjoutLigne = Table.InsertRows(#"Valeur remplacée", 0, {
+				        [User = "nouvel.utilisateur@esprit.tn", Page = "Nouveau"]
+				    }),
+				    #"Valeur remplacée1" = Table.ReplaceValue(AjoutLigne,"nouvel.utilisateur@esprit.tn","hlelimaram809@gmail.com",Replacer.ReplaceText,{"User"}),
+				    #"Valeur remplacée2" = Table.ReplaceValue(#"Valeur remplacée1","Nouveau","Employabilité",Replacer.ReplaceText,{"Page"}),
+				    #"Valeur remplacée3" = Table.ReplaceValue(#"Valeur remplacée2","hlelimaram809@gmail.com","fersi.hela@esprit.tn",Replacer.ReplaceText,{"User"}),
+				    #"Valeur remplacée4" = Table.ReplaceValue(#"Valeur remplacée3","fersi.hela@esprit.tn","rania.felah@esprit.tn",Replacer.ReplaceText,{"User"})
+				in
+				    #"Valeur remplacée4"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

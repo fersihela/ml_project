@@ -1,0 +1,45 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["public Dim_candidat","public Dim_offre","public dim_localisation","public dim_diplome","public Dim_profil","public dimdates","public fact_Admission","public fact_employabilite","public Resultats_Objectif1","public Resultats_Objectif2","public Resultats_Objectif3","public Resultats_Modele1","public Resultats_Modele2","Feuil1","Table","User"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.141.1253.0 (25.03)+74f9999a1e95f78c739f3ea2b96ba340e9ba8729
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'public Dim_candidat'
+ref table 'public Dim_offre'
+ref table 'public dim_localisation'
+ref table 'public dim_diplome'
+ref table 'public Dim_profil'
+ref table 'public dimdates'
+ref table DateTableTemplate_a0455ba1-9b09-401d-bc7f-41eabf24994a
+ref table LocalDateTable_b153181f-eb7a-4503-9182-ade54bb3dd2e
+ref table 'public fact_Admission'
+ref table Mesuree
+ref table 'public fact_employabilite'
+ref table LocalDateTable_d5827d78-1943-4bf0-8f3e-d5a34f35b8b5
+ref table LocalDateTable_671c6020-fd6a-48e3-99f5-d4cdbe35f006
+ref table LocalDateTable_2d4c01b9-6a1c-433c-bad5-f4a0bd7c3b57
+ref table 'public Resultats_Objectif1'
+ref table LocalDateTable_4954a8f5-858a-4fcb-8a88-af983516bba9
+ref table 'public Resultats_Objectif2'
+ref table 'public Resultats_Objectif3'
+ref table LocalDateTable_dee8f5da-9779-4302-8505-a7e0f1b4ce54
+ref table 'public Resultats_Modele1'
+ref table 'public Resultats_Modele2'
+ref table Feuil1
+ref table Table
+ref table User
+
+ref role psecurity
+
+ref cultureInfo en-US
+

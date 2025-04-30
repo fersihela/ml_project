@@ -1,0 +1,78 @@
+relationship 13656a8d-9472-46b4-9912-0aee6c5010e0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'public dimdates'.date
+	toColumn: LocalDateTable_b153181f-eb7a-4503-9182-ade54bb3dd2e.Date
+
+relationship 5d4a1cd9-5dd0-4033-b035-c29d7467ff73
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'public fact_Admission'.fk_candidat
+	toColumn: 'public Dim_candidat'.pk_candidat
+
+	annotation PBI_IsFromSource = FS
+
+relationship 49652e0c-2025-4943-9cb7-a8ba3e91b845
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'public fact_Admission'.fk_diplome
+	toColumn: 'public dim_diplome'.pk_diplome
+
+	annotation PBI_IsFromSource = FS
+
+relationship 3a82ede3-affa-4811-87eb-2660a7c9367e
+	fromColumn: 'public fact_Admission'.fk_date
+	toColumn: 'public dimdates'.date_pk
+
+	annotation PBI_IsFromSource = FS
+
+relationship 8d3a5407-44c1-48fb-9411-dc617bec3c9d
+	fromColumn: 'public fact_employabilite'.fk_offre
+	toColumn: 'public Dim_offre'.pk_offre
+
+	annotation PBI_IsFromSource = FS
+
+relationship 1e30e19f-3e04-4483-b118-213b4762e3d0
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'public fact_employabilite'.fk_profil
+	toColumn: 'public Dim_profil'.pk_profil
+
+	annotation PBI_IsFromSource = FS
+
+relationship 5d441ec1-9806-469a-9a09-6c7482465054
+	fromColumn: 'public fact_employabilite'.fk_localisation
+	toColumn: 'public dim_localisation'.pk_localisation
+
+	annotation PBI_IsFromSource = FS
+
+relationship 0ee7bff1-b1c2-4820-8981-38ac0c8a02ef
+	fromColumn: 'public fact_employabilite'.fk_date
+	toColumn: 'public dimdates'.date_pk
+
+	annotation PBI_IsFromSource = FS
+
+relationship c17b132f-2ae0-44ad-b6f3-cc2c722fc897
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'public fact_employabilite'.position_date_date
+	toColumn: LocalDateTable_d5827d78-1943-4bf0-8f3e-d5a34f35b8b5.Date
+
+relationship 269a9b22-015e-47b2-a09c-c8d2b26a5b55
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'public fact_employabilite'.date_offre
+	toColumn: LocalDateTable_671c6020-fd6a-48e3-99f5-d4cdbe35f006.Date
+
+relationship 74a7e42a-8504-42d6-b9d3-05fbc0deb912
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'public fact_employabilite'.date_diplome
+	toColumn: LocalDateTable_2d4c01b9-6a1c-433c-bad5-f4a0bd7c3b57.Date
+
+relationship 33633076-7fb4-4633-973d-14acb5881107
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'public Resultats_Objectif1'.ds
+	toColumn: LocalDateTable_4954a8f5-858a-4fcb-8a88-af983516bba9.Date
+
+relationship dda275eb-75af-43fa-a278-fed3f4cd8df3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'public Resultats_Objectif3'.ds
+	toColumn: LocalDateTable_dee8f5da-9779-4302-8505-a7e0f1b4ce54.Date
+
